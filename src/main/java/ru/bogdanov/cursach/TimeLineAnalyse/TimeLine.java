@@ -1,4 +1,4 @@
-package ru.bogdanov.cursach.graph;
+package ru.bogdanov.cursach.TimeLineAnalyse;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

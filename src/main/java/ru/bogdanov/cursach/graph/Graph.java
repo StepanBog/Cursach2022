@@ -1,7 +1,6 @@
 package ru.bogdanov.cursach.graph;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -13,7 +12,7 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.RectangleInsets;
+import ru.bogdanov.cursach.TimeLineAnalyse.TimeLine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +22,9 @@ import java.text.SimpleDateFormat;
 public class Graph extends JFrame{
     public Graph(TimeLine timeLine){
         initUI(timeLine);
+    }
+    public Graph(TimeLine timeLine1,TimeLine timeLine2){
+        initUI(timeLine1,timeLine2);
     }
 
     public TimeSeriesCollection createDataSet(TimeLine timeLine) {
@@ -35,6 +37,24 @@ public class Graph extends JFrame{
         }
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(s1);
+        return dataset;
+    }
+    public TimeSeriesCollection createDataSet(TimeLine timeLine1,TimeLine timeLine2) {
+        TimeSeries s1 = new TimeSeries("График №1");
+        TimeSeries s2 = new TimeSeries("График №2");
+        for (int i = 0; i < timeLine1.getDate().size(); i++) {
+            s1.add(new Day(timeLine1.getDate().get(i).getDayOfMonth(),
+                            timeLine1.getDate().get(i).getMonthValue(),
+                            timeLine1.getDate().get(i).getYear()),
+                    timeLine1.getInd().get(i));
+            s2.add(new Day(timeLine2.getDate().get(i).getDayOfMonth(),
+                            timeLine2.getDate().get(i).getMonthValue(),
+                            timeLine2.getDate().get(i).getYear()),
+                    timeLine2.getInd().get(i));
+        }
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        dataset.addSeries(s1);
+        dataset.addSeries(s2);
         return dataset;
     }
     public JFreeChart createChart(XYDataset dataset){
@@ -71,6 +91,21 @@ public class Graph extends JFrame{
     public void initUI(TimeLine timeLine) {
 
         XYDataset dataset = createDataSet(timeLine);
+        JFreeChart chart = createChart(dataset);
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(1000, 3000));
+        chartPanel.setBackground(Color.white);
+        add(chartPanel);
+
+        pack();
+        setTitle("Индексы МосБиржи");
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    public void initUI(TimeLine timeLine1,TimeLine timeLine2) {
+
+        XYDataset dataset = createDataSet(timeLine1,timeLine2);
         JFreeChart chart = createChart(dataset);
 
         ChartPanel chartPanel = new ChartPanel(chart);
