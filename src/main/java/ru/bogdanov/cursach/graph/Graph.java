@@ -29,7 +29,7 @@ public class Graph extends JFrame{
 
     public TimeSeriesCollection createDataSet(TimeLine timeLine) {
         TimeSeries s1 = new TimeSeries("График №1");
-        for (int i = 1300; i < timeLine.getDate().size(); i++) {
+        for (int i = 0; i < timeLine.getDate().size(); i++) {
             s1.add(new Day(timeLine.getDate().get(i).getDayOfMonth(),
                            timeLine.getDate().get(i).getMonthValue(),
                            timeLine.getDate().get(i).getYear()),
@@ -47,6 +47,8 @@ public class Graph extends JFrame{
                             timeLine1.getDate().get(i).getMonthValue(),
                             timeLine1.getDate().get(i).getYear()),
                     timeLine1.getInd().get(i));
+        }
+        for (int i = 0; i < timeLine2.getDate().size(); i++) {
             s2.add(new Day(timeLine2.getDate().get(i).getDayOfMonth(),
                             timeLine2.getDate().get(i).getMonthValue(),
                             timeLine2.getDate().get(i).getYear()),
