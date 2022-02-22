@@ -1,4 +1,4 @@
-package ru.bogdanov.cursach.TimeLineAnalyse;
+package ru.bogdanov.cursach.TimeSeriesAnalyse;
 
 import lombok.Data;
 
@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class DoubleTimeLine {
+public class DoubleTimeSeries {
     private List<LocalDate> date = new ArrayList<>();
     private List<Pair> ind = new ArrayList<>();
 
-    public DoubleTimeLine(TimeLine t1, TimeLine t2) {
+    public DoubleTimeSeries(TimeSeries t1, TimeSeries t2) {
         LocalDate firstDate;
         LocalDate lastDate;
         if (t1.getDate().get(0).isBefore(t2.getDate().get(0)))
@@ -35,25 +35,26 @@ public class DoubleTimeLine {
         }
     }
 
-    public TimeLine getLeftTimeLine(){
-        TimeLine timeLine = new TimeLine();
+    public TimeSeries getLeftTimeLine(){
+        TimeSeries timeSeries = new TimeSeries();
         for (int i = 0; i < date.size(); i++) {
-            timeLine.getDate().add(date.get(i));
-            timeLine.getInd().add(ind.get(i).first);
+            timeSeries.getDate().add(date.get(i));
+            timeSeries.getInd().add(ind.get(i).first);
         }
-        return timeLine;
-    }
-    public TimeLine getRightTimeLine(){
-        TimeLine timeLine = new TimeLine();
-        for (int i = 0; i < date.size(); i++) {
-            timeLine.getDate().add(date.get(i));
-            timeLine.getInd().add(ind.get(i).second);
-        }
-        return timeLine;
+        return timeSeries;
     }
 
-    public TimeLine leftMinusRight(){
-        TimeLine result = new TimeLine();
+    public TimeSeries getRightTimeLine(){
+        TimeSeries timeSeries = new TimeSeries();
+        for (int i = 0; i < date.size(); i++) {
+            timeSeries.getDate().add(date.get(i));
+            timeSeries.getInd().add(ind.get(i).second);
+        }
+        return timeSeries;
+    }
+
+    public TimeSeries leftMinusRight(){
+        TimeSeries result = new TimeSeries();
         result.setDate(date);
         ind.forEach(ind -> result.getInd().add(ind.first - ind.second));
         return  result;

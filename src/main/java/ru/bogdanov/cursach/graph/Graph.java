@@ -2,9 +2,9 @@ package ru.bogdanov.cursach.graph;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
-import ru.bogdanov.cursach.TimeLineAnalyse.DoubleTimeLine;
-import ru.bogdanov.cursach.TimeLineAnalyse.Pair;
-import ru.bogdanov.cursach.TimeLineAnalyse.TimeLine;
+import ru.bogdanov.cursach.TimeSeriesAnalyse.DoubleTimeSeries;
+import ru.bogdanov.cursach.TimeSeriesAnalyse.Pair;
+import ru.bogdanov.cursach.TimeSeriesAnalyse.TimeSeries;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @UtilityClass
 public class Graph {
     @SneakyThrows
-    public void correlogram(List<Double> data) {
+    public void barChart(List<Double> data) {
         File f = new File("correlogram.txt");
         FileWriter fileWriter = new FileWriter(f);
         int i = 1;
@@ -34,9 +34,15 @@ public class Graph {
     }
 
     @SneakyThrows
-    public void timeList(TimeLine data) {
-        File f = new File("timeList.txt");
+    public void timeSeries(TimeSeries data) {
+        File f = new File("timeList.plot");
         FileWriter fileWriter = new FileWriter(f);
+        fileWriter.write("set xdata time\n" +
+                "set timefmt \"%Y-%m-%d\"\n" +
+                "plot 'timeList.txt' using 1:2 with lines");
+        fileWriter.close();
+        f = new File("timeList.txt");
+        fileWriter = new FileWriter(f);
         for (int i = 0; i < data.getDate().size(); i++) {
             fileWriter.write(data.getDate().get(i).toString() + " ");
             fileWriter.write(data.getInd().get(i).toString());
@@ -49,7 +55,7 @@ public class Graph {
     }
 
     @SneakyThrows
-    public void doubleTimeList(DoubleTimeLine data) {
+    public void doubleTimeSeries(DoubleTimeSeries data) {
         File f = new File("doubleTimeList.txt");
         FileWriter fileWriter = new FileWriter(f);
         for (int i = 0; i < data.getDate().size(); i++) {
@@ -65,7 +71,9 @@ public class Graph {
     }
 
     @SneakyThrows
-    public void tripleTimeList(TimeLine data,TimeLine data1, TimeLine data2) {
+    public void tripleTimeSeries(TimeSeries data,
+                               TimeSeries data1,
+                               TimeSeries data2) {
         File f = new File("tripleTimeList.txt");
         FileWriter fileWriter = new FileWriter(f);
         for (int i = 0; i < data2.getDate().size(); i++) {
@@ -80,8 +88,12 @@ public class Graph {
         String command = "gnuplot -persist " + Paths.get("").toAbsolutePath().toString().replace("\\", "/")+ "/tripleTimeList.plot";
         commandPrompt.exec(command).waitFor(10L, TimeUnit.MINUTES);
     }
+
     @SneakyThrows
-    public void fourTimeList(TimeLine data,TimeLine data1, TimeLine data2, TimeLine data3) {
+    public void fourTimeSeries(TimeSeries data,
+                             TimeSeries data1,
+                             TimeSeries data2,
+                             TimeSeries data3) {
         File f = new File("fourTimeList.txt");
         FileWriter fileWriter = new FileWriter(f);
         for (int i = 0; i < data2.getDate().size(); i++) {
@@ -99,7 +111,7 @@ public class Graph {
     }
 
     @SneakyThrows
-    public void correlogram(ArrayList<Pair> list) {
+    public void barChart(ArrayList<Pair> list) {
         File f = new File("correlogram2.txt");
         FileWriter fileWriter = new FileWriter(f);
         int i = 1;

@@ -6,7 +6,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
-import ru.bogdanov.cursach.TimeLineAnalyse.TimeLine;
+import ru.bogdanov.cursach.TimeSeriesAnalyse.TimeSeries;
 
 import java.io.FileReader;
 import java.util.List;
@@ -15,9 +15,9 @@ import java.util.List;
 public class DataLoader {
 
     @SneakyThrows
-        public TimeLine read(String path){
+        public TimeSeries read(String path){
         CSVParser csvParser = new CSVParserBuilder().withSeparator(',').build();
-        TimeLine timeLine = new TimeLine();
+        TimeSeries timeSeries = new TimeSeries();
 
         try(CSVReader reader = new CSVReaderBuilder(
                 new FileReader(path))
@@ -26,13 +26,13 @@ public class DataLoader {
                 .build()){
             List<String[]> r = reader.readAll();
             r.forEach(x -> {
-                timeLine.getDate().add(Parser.parseDate(x[0]));
-                timeLine.getInd().add(Double.parseDouble(x[5]));
+                timeSeries.getDate().add(Parser.parseDate(x[0]));
+                timeSeries.getInd().add(Double.parseDouble(x[1]));
                     }
             );
 
 
         }
-        return timeLine;
+        return timeSeries;
     }
 }

@@ -12,26 +12,29 @@ import java.time.LocalDate;
 public class DataGenerator {
 
     @SneakyThrows
-    public void genSin(String name) {
+    public void genTimeSeries(String name,
+                       boolean trend,
+                       boolean season, int seasonValue,
+                       boolean random, int randomValue,
+                       int len) {
         File f = new File(name);
         FileWriter fw = new FileWriter(f);
-        fw.write("<DATE>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>,<VOL>\n");
+        fw.write("<DATE>,<VAL>\n");
         LocalDate date = LocalDate.now();
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < len; i++) {
             if (i != 0)
                 fw.write("\n");
-            double v = Math.sqrt(i) * i + Math.sin((float) i / 30) * 10000 + (Math.random() - 0.5) * 15000;
-            fw.write(date.getYear() + "" + new DecimalFormat("00").format(date.getMonthValue()) + "" + new DecimalFormat("00").format(date.getDayOfMonth()) + ""
-                    + ",000000,"
-                    + v
-                    + ","
-                    + v
-                    + ","
-                    + v
-                    + ","
-                    + v
-                    + ","
-                    + "1");
+            double v = 0;
+            if (trend)
+                v += Math.sqrt(i) * i;
+            if (season)
+                v += Math.sin((float) i / 30) * seasonValue;
+            if (random)
+                v += (Math.random() - 0.5) * randomValue;
+            fw.write(date.getYear() + ""
+                    + new DecimalFormat("00").format(date.getMonthValue()) + ""
+                    + new DecimalFormat("00").format(date.getDayOfMonth()) + ""
+                    + v);
             date = date.plusDays(1);
         }
         fw.close();
