@@ -17,10 +17,10 @@ public class DataGenerator {
         FileWriter fw = new FileWriter(f);
         fw.write("<DATE>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>,<VOL>\n");
         LocalDate date = LocalDate.now();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 2000; i++) {
             if (i != 0)
                 fw.write("\n");
-            double v = Math.sqrt(i) * i + Math.sin((float) i / 30) * 10000 + (Math.random() - 0.5) * 6000;
+            double v = Math.sqrt(i) * i + Math.sin((float) i / 30) * 10000 + (Math.random() - 0.5) * 15000;
             fw.write(date.getYear() + "" + new DecimalFormat("00").format(date.getMonthValue()) + "" + new DecimalFormat("00").format(date.getDayOfMonth()) + ""
                     + ",000000,"
                     + v

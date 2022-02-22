@@ -5,11 +5,13 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 import ru.bogdanov.cursach.TimeLineAnalyse.TimeLine;
 
 import java.io.FileReader;
 import java.util.List;
 
+@UtilityClass
 public class DataLoader {
 
     @SneakyThrows
