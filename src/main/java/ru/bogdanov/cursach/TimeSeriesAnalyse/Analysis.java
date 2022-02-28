@@ -54,23 +54,24 @@ public class Analysis {
 
     public static TimeSeries balancedCentralSmoothing(TimeSeries t1) {
         TimeSeries t2 = new TimeSeries();
-        Integer p = t1.getDate().size() / 10 / 100 * 100;
+        Integer p = t1.getDate().size() / 4 / 10 * 10;
         Double v1 = (double) 1 / p;
         for (int i = 0; i < t1.getInd().size() - p; i++) {
             Double value = 0.0;
             for (int j = 0; j < p; j++) {
-                value += t1.getInd().get(i + j) * v1;
+                value += t1.getInd().get(i + j);
             }
+            value = value/p;
 
             t2.getInd().add(value);
-            t2.getDate().add(t1.getDate().get(i + p / 2 - 1));
+            t2.getDate().add(t1.getDate().get(i + p / 2));
         }
         return t2;
     }
 
     public static List<Pair> autoCorrelation(TimeSeries t1) {
         List<Pair> result = new ArrayList<>();
-        for (int gap = 1; gap < t1.getDate().size() / 4; gap++) {
+        for (int gap = 1; gap < t1.getDate().size() / 4.5; gap++) {
             Double value = markAutoCorrelation(t1, gap);
             result.add(new Pair(value, (double) gap));
         }

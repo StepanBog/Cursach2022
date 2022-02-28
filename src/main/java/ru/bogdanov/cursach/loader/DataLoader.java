@@ -16,7 +16,7 @@ public class DataLoader {
 
     @SneakyThrows
         public TimeSeries read(String path){
-        CSVParser csvParser = new CSVParserBuilder().withSeparator(',').build();
+        CSVParser csvParser = new CSVParserBuilder().withSeparator('\t').build();
         TimeSeries timeSeries = new TimeSeries();
 
         try(CSVReader reader = new CSVReaderBuilder(
@@ -27,7 +27,7 @@ public class DataLoader {
             List<String[]> r = reader.readAll();
             r.forEach(x -> {
                 timeSeries.getDate().add(Parser.parseDate(x[0]));
-                timeSeries.getInd().add(Double.parseDouble(x[1]));
+                timeSeries.getInd().add(Double.parseDouble(x[3]));
                     }
             );
 

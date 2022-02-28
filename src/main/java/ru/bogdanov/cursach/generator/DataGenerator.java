@@ -33,7 +33,35 @@ public class DataGenerator {
                 v += (Math.random() - 0.5) * randomValue;
             fw.write(date.getYear() + ""
                     + new DecimalFormat("00").format(date.getMonthValue()) + ""
-                    + new DecimalFormat("00").format(date.getDayOfMonth()) + ""
+                    + new DecimalFormat("00").format(date.getDayOfMonth()) + ","
+                    + v);
+            date = date.plusDays(1);
+        }
+        fw.close();
+    }
+    @SneakyThrows
+    public void genTimeSeriesCos(String name,
+                              boolean trend,
+                              boolean season, int seasonValue,
+                              boolean random, int randomValue,
+                              int len) {
+        File f = new File(name);
+        FileWriter fw = new FileWriter(f);
+        fw.write("<DATE>,<VAL>\n");
+        LocalDate date = LocalDate.now();
+        for (int i = 0; i < len; i++) {
+            if (i != 0)
+                fw.write("\n");
+            double v = 0;
+            if (trend)
+                v += Math.sqrt(i) * i;
+            if (season)
+                v += Math.cos((float) i / 30) * seasonValue;
+            if (random)
+                v += (Math.random() - 0.5) * randomValue;
+            fw.write(date.getYear() + ""
+                    + new DecimalFormat("00").format(date.getMonthValue()) + ""
+                    + new DecimalFormat("00").format(date.getDayOfMonth()) + ","
                     + v);
             date = date.plusDays(1);
         }

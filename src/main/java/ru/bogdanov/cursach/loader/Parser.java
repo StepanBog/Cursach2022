@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Parser {
     public static LocalDate parseDate(String date) {
-        LocalDate date1 = LocalDate.of(Integer.parseInt(date.substring(0,4)),Integer.parseInt(date.substring(4,6)),Integer.parseInt(date.substring(6,8)));
+        LocalDate date1 = LocalDate.of(Integer.parseInt(date.substring(6,10)),Integer.parseInt(date.substring(3,5)),Integer.parseInt(date.substring(0,2)));
         return date1;
     }
 }

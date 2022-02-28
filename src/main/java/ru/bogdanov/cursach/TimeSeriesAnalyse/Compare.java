@@ -8,8 +8,8 @@ import java.util.List;
 @UtilityClass
 public class Compare {
 
-    public List<Double> getCorrelationIndex(DoubleTimeSeries timeSeries) {
-        List<Double> result = new ArrayList<>();
+    public List<Pair> getCorrelationIndex(DoubleTimeSeries timeSeries) {
+        List<Pair> result = new ArrayList<>();
         for (int gap = 0; gap < timeSeries.getDate().size() / 4; gap++) {
             Integer len = timeSeries.getDate().size();
             Double ch = (double) 0;
@@ -26,7 +26,7 @@ public class Compare {
                 zn2 += (t2.getInd().get(i + gap) - y_) * (t2.getInd().get(i + gap) - y_);
             }
             zn = Math.sqrt(zn1 * zn2);
-            result.add(ch / zn);
+            result.add(new Pair(ch / zn, (double) gap));
         }
         return result;
 
